@@ -33,7 +33,9 @@ describe("POST /", function () {
         zip: ""
       });
 
-      expect(resp.statusCode).toEqual(400);
+      expect(resp.statusCode).toEqual(400); // add more tests that fail for different reasons
+      // id is invalid, zip / address are missing
+      // test that we're getting back the right error messages
   });
 
 });
