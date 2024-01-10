@@ -10,6 +10,9 @@ const app = require("../app");
 
 describe("POST /", function () {
   test("valid", async function () {
+    shipItApi.shipProduct
+      .mockReturnValue(3);
+
     const resp = await request(app)
       .post("/shipments")
       .send({
@@ -18,9 +21,10 @@ describe("POST /", function () {
         addr: "100 Test St",
         zip: "12345-6789",
       });
+      //BUG: This is where we had it before -- request already finished so jest.fn() returns undefined
+      // shipItApi.shipProduct
+      // .mockReturnValue(3);
 
-    shipItApi.shipProduct
-             .mockReturnValue(3);
 
     expect(resp.body).toEqual({ shipped: 3 });
     //API {shipped: 3}
