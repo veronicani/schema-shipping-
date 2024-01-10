@@ -27,9 +27,14 @@ router.post("/", async function (req, res, next) {
     throw new BadRequestError(errs);
   }
 
+  debugger;
+
   const { productId, name, addr, zip } = req.body;
   const shipId = await shipProduct({ productId, name, addr, zip });
   // const shipId = 3 (shipProduct just returns a number, like 3)
+
+  debugger;
+
   return res.json({ shipped: shipId });
 });
 

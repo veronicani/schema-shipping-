@@ -2,22 +2,27 @@
 
 const fetchMock = require("fetch-mock");
 const request = require("supertest");
-const app = require("../app");
 
+const shipItApi = require("../shipItApi.js");
+shipItApi.shipProduct = jest.fn();
+
+const app = require("../app");
 
 describe("POST /", function () {
   test("valid", async function () {
     const resp = await request(app)
-    .post("/shipments")
-    .send({
-      productId: 1000,
-      name: "Test Tester",
-      addr: "100 Test St",
-      zip: "12345-6789",
-    });
+      .post("/shipments")
+      .send({
+        productId: 1000,
+        name: "Test Tester",
+        addr: "100 Test St",
+        zip: "12345-6789",
+      });
 
-    //mock Response from shipItAPI : 3
-    expect(resp.body).toEqual({ shipped: expect.any(Number) });
+    shipItApi.shipProduct
+             .mockReturnValue(3);
+
+    expect(resp.body).toEqual({ shipped: 3 });
     //API {shipped: 3}
   });
 
