@@ -22,4 +22,20 @@ describe("POST /", function () {
       .send();
     expect(resp.statusCode).toEqual(400);
   });
+
+  test("throws error if invalid request body", async function () {
+    const resp = await request(app)
+      .post("/shipments")
+      .send({
+        productId: 12,
+        name: "",
+        addr: "",
+        zip: ""
+      });
+
+      expect(resp.statusCode).toEqual(400);
+  });
+
 });
+
+
