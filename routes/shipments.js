@@ -18,7 +18,7 @@ const orderDetailsSchema = require("../schemas/orderDetailsSchema.json");
  */
 
 router.post("/", async function (req, res, next) {
-
+  console.log("Making post request to our api at /");
   const result = jsonschema.validate(
     req.body, orderDetailsSchema, {required : true});
 
@@ -27,13 +27,10 @@ router.post("/", async function (req, res, next) {
     throw new BadRequestError(errs);
   }
 
-  debugger;
-
   const { productId, name, addr, zip } = req.body;
   const shipId = await shipProduct({ productId, name, addr, zip });
   // const shipId = 3 (shipProduct just returns a number, like 3)
-
-  debugger;
+  console.log("shipId: ", shipId);
 
   return res.json({ shipped: shipId });
 });
